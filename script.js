@@ -26,6 +26,50 @@ const discountResult = document.getElementById('discountResult');
 const ordersSection = document.getElementById('ordersSection');
 const ordersList = document.getElementById('ordersList');
 
+const adminPanel = document.getElementById('adminPanel');
+const productForm = document.getElementById('productForm');
+const productMsg = document.getElementById('productMsg');
+const discountAdminForm = document.getElementById('discountAdminForm');
+const discountAdminMsg = document.getElementById('discountAdminMsg');
+
+// 🔐 Pokazuj panel tylko dla Ciebie
+function checkAdminAccess() {
+  const adminEmail = 'tomasz@visionstock.com'; // ← Twój email
+  if (session?.user?.email === adminEmail) {
+    adminPanel.classList.remove('hidden');
+  } else {
+    adminPanel.classList.add('hidden');
+  }
+}
+
+// 🧾 Dodawanie produktu
+productForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  productMsg.textContent = 'Dodaję produkt...';
+
+  const id = document.getElementById('productId').value.trim();
+  const name = document.getElementById('productName').value.trim();
+  const price = parseFloat(document.getElementById('productPrice').value);
+  const link = document.getElementById('productLink').value.trim();
+
+  const { error } = await supabase.from('products').insert({ id, name, price, download_link: link });
+  productMsg.textContent = error ? 'Błąd: ' + error.message : '✅ Produkt dodany!';
+});
+
+// 🎟️ Dodawanie kodu rabatowego
+discountAdminForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  discountAdminMsg.textContent = 'Dodaję kod...';
+
+  const code = document.getElementById('adminCode').value.trim();
+  const value = parseFloat(document.getElementById('adminValue').value);
+  const expires_at = document.getElementById('adminExpiry').value || null;
+  const max_uses = parseInt(document.getElementById('adminMaxUses').value) || 1;
+
+  const { error } = await supabase.from('discount_codes').insert({ code, value, expires_at, max_uses });
+  discountAdminMsg.textContent = error ? 'Błąd: ' + error.message : '✅ Kod dodany!';
+});
+
 // 🧠 Funkcje pomocnicze
 function updateAuthUI() {
   const loggedIn = !!session?.user;

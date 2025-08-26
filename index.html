@@ -6,6 +6,7 @@
   <title>VisionStock – Twoje zakupy online</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="module" src="script.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body class="bg-gray-100 text-gray-900">
   <header class="bg-white shadow p-4 flex justify-between items-center">
@@ -44,6 +45,35 @@
       <h2 class="text-lg font-semibold mb-2">Twoje zamówienia</h2>
       <ul id="ordersList" class="space-y-2 text-sm"></ul>
     </section>
+    <section id="adminPanel" class="bg-white p-4 rounded shadow hidden">
+  <h2 class="text-lg font-semibold mb-4">🔧 Panel administratora</h2>
+
+  <!-- Dodawanie produktu -->
+  <div class="mb-6">
+    <h3 class="font-medium mb-2">Dodaj produkt</h3>
+    <form id="productForm" class="space-y-2">
+      <input type="text" id="productId" placeholder="ID produktu (np. ebook1)" class="w-full border px-3 py-2 rounded" required />
+      <input type="text" id="productName" placeholder="Nazwa produktu" class="w-full border px-3 py-2 rounded" required />
+      <input type="number" id="productPrice" placeholder="Cena (np. 19.99)" class="w-full border px-3 py-2 rounded" required />
+      <input type="text" id="productLink" placeholder="Link do pobrania" class="w-full border px-3 py-2 rounded" required />
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Dodaj produkt</button>
+      <p id="productMsg" class="text-sm text-gray-600"></p>
+    </form>
+  </div>
+
+  <!-- Dodawanie kodu rabatowego -->
+  <div>
+    <h3 class="font-medium mb-2">Dodaj kod rabatowy</h3>
+    <form id="discountAdminForm" class="space-y-2">
+      <input type="text" id="adminCode" placeholder="Kod (np. RABAT10)" class="w-full border px-3 py-2 rounded" required />
+      <input type="number" id="adminValue" placeholder="Wartość zniżki (np. 10)" class="w-full border px-3 py-2 rounded" required />
+      <input type="date" id="adminExpiry" class="w-full border px-3 py-2 rounded" />
+      <input type="number" id="adminMaxUses" placeholder="Limit użyć (np. 1)" class="w-full border px-3 py-2 rounded" />
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Dodaj kod</button>
+      <p id="discountAdminMsg" class="text-sm text-gray-600"></p>
+    </form>
+  </div>
+</section>
   </main>
 
   <!-- Modal logowania -->
