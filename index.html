@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VisionStock – Twoje zakupy online</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="script.js" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">🛒 VisionStock</h1>
+    <div id="authArea" class="flex gap-2">
+      <span id="userEmail" class="text-sm text-gray-600 hidden"></span>
+      <button id="btnLogin" class="bg-blue-600 text-white px-3 py-1 rounded">Zaloguj</button>
+      <button id="btnLogout" class="bg-gray-300 px-3 py-1 rounded hidden">Wyloguj</button>
+    </div>
+  </header>
+
+  <main class="max-w-2xl mx-auto p-6 space-y-6">
+    <!-- Instrukcja płatności -->
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Jak kupić produkt</h2>
+      <ol class="list-decimal pl-5 space-y-1 text-sm">
+        <li>Wyślij płatność na PayPal: <strong>visionstockbuy@gmail.com</strong></li>
+        <li>W notatce wpisz <code>produkt123</code> (ID produktu)</li>
+        <li>Opcjonalnie: w polu „custom” wpisz kod rabatowy</li>
+        <li>Po zaksięgowaniu płatności otrzymasz produkt na maila</li>
+      </ol>
+    </section>
+
+    <!-- Formularz kodu rabatowego -->
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-lg font-semibold mb-2">Sprawdź kod rabatowy</h2>
+      <form id="discountForm" class="flex gap-2">
+        <input type="text" id="discountCode" placeholder="np. RABAT10" class="flex-1 border px-3 py-2 rounded" />
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Sprawdź</button>
+      </form>
+      <p id="discountResult" class="text-sm mt-2 text-gray-700"></p>
+    </section>
+
+    <!-- Historia zakupów -->
+    <section id="ordersSection" class="bg-white p-4 rounded shadow hidden">
+      <h2 class="text-lg font-semibold mb-2">Twoje zamówienia</h2>
+      <ul id="ordersList" class="space-y-2 text-sm"></ul>
+    </section>
+  </main>
+
+  <!-- Modal logowania -->
+  <dialog id="loginModal" class="p-6 rounded shadow max-w-sm w-full">
+    <form method="dialog" class="space-y-4">
+      <h3 class="text-lg font-semibold">Logowanie / Rejestracja</h3>
+      <input type="email" id="loginEmail" placeholder="Email" required class="w-full border px-3 py-2 rounded" />
+      <input type="password" id="loginPassword" placeholder="Hasło" required class="w-full border px-3 py-2 rounded" />
+      <div class="flex gap-2">
+        <button id="btnSignIn" type="button" class="bg-blue-600 text-white px-4 py-2 rounded">Zaloguj</button>
+        <button id="btnSignUp" type="button" class="bg-gray-300 px-4 py-2 rounded">Zarejestruj</button>
+      </div>
+      <p id="loginMsg" class="text-sm text-gray-600"></p>
+    </form>
+  </dialog>
+</body>
+</html>
