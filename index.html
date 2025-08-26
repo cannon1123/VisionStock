@@ -3,91 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VisionStock – Twoje zakupy online</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script type="module" src="script.js" defer></script>
+  <title>VisionStock</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">🛒 VisionStock</h1>
-    <div id="authArea" class="flex gap-2">
-      <span id="userEmail" class="text-sm text-gray-600 hidden"></span>
-      <button id="btnLogin" class="bg-blue-600 text-white px-3 py-1 rounded">Zaloguj</button>
-      <button id="btnLogout" class="bg-gray-300 px-3 py-1 rounded hidden">Wyloguj</button>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <h1>🚀 VisionStock – Sprzedawaj Produkty Cyfrowe Bezpiecznie i Szybko</h1>
+    <p>Najlepsze miejsce do sprzedaży e-booków, kont, licencji i więcej.</p>
+    <div class="buttons">
+      <a href="#products" class="btn">Zobacz Produkty</a>
+      <a href="#contact" class="btn secondary">Dowiedz się więcej</a>
+    </div>
+    <div class="marquee">
+      <span>🔥 Szybka dostawa • ✅ Gwarancja • 💳 Płatność PayPal • 📦 Produkty cyfrowe • 🛡️ Bezpieczna transakcja 🔥</span>
     </div>
   </header>
 
-  <main class="max-w-2xl mx-auto p-6 space-y-6">
-    <!-- Instrukcja płatności -->
-    <section class="bg-white p-4 rounded shadow">
-      <h2 class="text-lg font-semibold mb-2">Jak kupić produkt</h2>
-      <ol class="list-decimal pl-5 space-y-1 text-sm">
-        <li>Wyślij płatność na PayPal: <strong>visionstockbuy@gmail.com</strong></li>
-        <li>W notatce wpisz <code>produkt123</code> (ID produktu)</li>
-        <li>Opcjonalnie: w polu „custom” wpisz kod rabatowy</li>
-        <li>Po zaksięgowaniu płatności otrzymasz produkt na maila</li>
-      </ol>
-    </section>
+  <!-- Produkty -->
+  <section id="products" class="section">
+    <h2>📦 Nasze Produkty</h2>
+    <div class="product-grid" id="productGrid">
+      <p>Ładowanie produktów...</p>
+    </div>
+  </section>
 
-    <!-- Formularz kodu rabatowego -->
-    <section class="bg-white p-4 rounded shadow">
-      <h2 class="text-lg font-semibold mb-2">Sprawdź kod rabatowy</h2>
-      <form id="discountForm" class="flex gap-2">
-        <input type="text" id="discountCode" placeholder="np. RABAT10" class="flex-1 border px-3 py-2 rounded" />
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Sprawdź</button>
-      </form>
-      <p id="discountResult" class="text-sm mt-2 text-gray-700"></p>
-    </section>
+  <!-- Opinie -->
+  <section id="reviews" class="section">
+    <h2>🌟 Opinie Klientów</h2>
+    <div class="review-grid" id="reviewGrid">
+      <p>Ładowanie opinii...</p>
+    </div>
+  </section>
 
-    <!-- Historia zakupów -->
-    <section id="ordersSection" class="bg-white p-4 rounded shadow hidden">
-      <h2 class="text-lg font-semibold mb-2">Twoje zamówienia</h2>
-      <ul id="ordersList" class="space-y-2 text-sm"></ul>
-    </section>
-    <section id="adminPanel" class="bg-white p-4 rounded shadow hidden">
-  <h2 class="text-lg font-semibold mb-4">🔧 Panel administratora</h2>
+  <!-- Kontakt -->
+  <section id="contact" class="section">
+    <h2>📬 Skontaktuj się z nami</h2>
+    <p>Masz pytania? Dołącz do naszego Discorda lub napisz na kontakt@visionstock.com</p>
+    <a href="https://discord.gg/twojserwer" class="btn">Dołącz na Discord</a>
+  </section>
 
-  <!-- Dodawanie produktu -->
-  <div class="mb-6">
-    <h3 class="font-medium mb-2">Dodaj produkt</h3>
-    <form id="productForm" class="space-y-2">
-      <input type="text" id="productId" placeholder="ID produktu (np. ebook1)" class="w-full border px-3 py-2 rounded" required />
-      <input type="text" id="productName" placeholder="Nazwa produktu" class="w-full border px-3 py-2 rounded" required />
-      <input type="number" id="productPrice" placeholder="Cena (np. 19.99)" class="w-full border px-3 py-2 rounded" required />
-      <input type="text" id="productLink" placeholder="Link do pobrania" class="w-full border px-3 py-2 rounded" required />
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Dodaj produkt</button>
-      <p id="productMsg" class="text-sm text-gray-600"></p>
-    </form>
-  </div>
+  <footer>
+    <p>©2025 VisionStock – Wszystkie prawa zastrzeżone</p>
+  </footer>
 
-  <!-- Dodawanie kodu rabatowego -->
-  <div>
-    <h3 class="font-medium mb-2">Dodaj kod rabatowy</h3>
-    <form id="discountAdminForm" class="space-y-2">
-      <input type="text" id="adminCode" placeholder="Kod (np. RABAT10)" class="w-full border px-3 py-2 rounded" required />
-      <input type="number" id="adminValue" placeholder="Wartość zniżki (np. 10)" class="w-full border px-3 py-2 rounded" required />
-      <input type="date" id="adminExpiry" class="w-full border px-3 py-2 rounded" />
-      <input type="number" id="adminMaxUses" placeholder="Limit użyć (np. 1)" class="w-full border px-3 py-2 rounded" />
-      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Dodaj kod</button>
-      <p id="discountAdminMsg" class="text-sm text-gray-600"></p>
-    </form>
-  </div>
-</section>
-  </main>
-
-  <!-- Modal logowania -->
-  <dialog id="loginModal" class="p-6 rounded shadow max-w-sm w-full">
-    <form method="dialog" class="space-y-4">
-      <h3 class="text-lg font-semibold">Logowanie / Rejestracja</h3>
-      <input type="email" id="loginEmail" placeholder="Email" required class="w-full border px-3 py-2 rounded" />
-      <input type="password" id="loginPassword" placeholder="Hasło" required class="w-full border px-3 py-2 rounded" />
-      <div class="flex gap-2">
-        <button id="btnSignIn" type="button" class="bg-blue-600 text-white px-4 py-2 rounded">Zaloguj</button>
-        <button id="btnSignUp" type="button" class="bg-gray-300 px-4 py-2 rounded">Zarejestruj</button>
-      </div>
-      <p id="loginMsg" class="text-sm text-gray-600"></p>
-    </form>
-  </dialog>
+  <script src="script.js"></script>
 </body>
 </html>

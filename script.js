@@ -152,11 +152,56 @@ supabase.auth.onAuthStateChange((_event, newSession) => {
   updateAuthUI();
   loadOrders();
 });
+// 📦 Ładowanie produktów z Supabase
+async function loadProducts() {
+  const { data, error } = await supabase.from('products').select('*');
+  const container = document.getElementById('productGrid');
+  container.innerHTML = '';
 
+  if (error) {
+    container.innerHTML = '<p>Błąd ładowania produktów.</p>';
+    console.error(error);
+    return;
+  }
+
+  data.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <h3>${product.name}</h3>
+      <p>${product.description || ''}</p>
+      <span class="price">${product.price.toFixed(2)} zł</span>
+      <a href="${product.download_link}" class="buy-btn">Kup teraz</a>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// 🌟 Ładowanie opinii z Supabase
+async function loadReviews() {
+  const { data, error } = await supabase.from('reviews').select('*');
+  const container = document.getElementById('reviewGrid');
+  container.innerHTML = '';
+
+  if (error) {
+    container.innerHTML = '<p>Błąd ładowania opinii.</p>';
+    console.error(error);
+    return;
+  }
+
+  data.forEach(review => {
+    const box = document.createElement('div');
+    box.className = 'review';
+    box.innerHTML = `⭐️`.repeat(review.stars) + ` „${review.comment}”`;
+    container.appendChild(box);
+  });
+}
 // 🔁 Inicjalizacja
 (async () => {
   const { data } = await supabase.auth.getSession();
   session = data.session;
   updateAuthUI();
   loadOrders();
+  loadProducts();
+  loadReviews();
 })();
